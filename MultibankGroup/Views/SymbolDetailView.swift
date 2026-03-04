@@ -30,6 +30,7 @@ struct SymbolDetailView: View {
                 .padding()
             }
             .navigationTitle(symbol.id)
+            .accessibilityIdentifier("symbolDetailView")
         } else {
             ContentUnavailableView("Symbol Not Found", systemImage: "exclamationmark.triangle")
         }

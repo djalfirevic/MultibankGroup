@@ -43,6 +43,7 @@ struct PriceFeedView: View {
         Circle()
             .fill(service.isConnected ? Color.green : Color.red)
             .frame(width: 12, height: 12)
+            .accessibilityIdentifier("connectionStatus")
     }
 
     private var feedToggleButton: some View {
@@ -55,6 +56,7 @@ struct PriceFeedView: View {
         } label: {
             Text(service.isConnected ? "Stop" : "Start")
                 .fontWeight(.medium)
+                .accessibilityIdentifier("feedToggle")
         }
     }
 }
