@@ -11,7 +11,7 @@ struct RootView: View {
 
     // MARK: - Properties
 
-    @StateObject private var service = WebSocketService()
+    @StateObject private var service: WebSocketService
     @StateObject private var coordinator: RootCoordinator
 
     // MARK: - Initialization
