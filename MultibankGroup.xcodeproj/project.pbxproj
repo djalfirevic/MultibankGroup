@@ -29,6 +29,16 @@
 		C430D0812F58908600CD5824 /* MultibankGroupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MultibankGroupUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C430D0A02F58908600CD5824 /* Exceptions for "MultibankGroup" folder in "MultibankGroup" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C430D0692F58908500CD5824 /* MultibankGroup */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C430D06C2F58908500CD5824 /* MultibankGroup */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -49,16 +59,6 @@
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		C430D0A02F58908600CD5824 /* Exceptions for "MultibankGroup" folder in "MultibankGroup" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = C430D0692F58908500CD5824 /* MultibankGroup */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C430D0672F58908500CD5824 /* Frameworks */ = {
