@@ -116,18 +116,24 @@ final class WebSocketService: ObservableObject {
     }
 
     private func handleEchoedMessage(_ text: String) {
-        let components = text.split(separator: ":")
-        guard components.count == 2,
-              let price = Double(components[1]) else { return }
-
-        let symbolId = String(components[0])
+        guard let (symbolId, price) = Self.parseMessage(text) else { return }
 
         DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            if let index = self.symbols.firstIndex(where: { $0.id == symbolId }) {
-                self.symbols[index].previousPrice = self.symbols[index].price
-                self.symbols[index].price = price
-            }
+            self?.applyPriceUpdate(symbolId: symbolId, price: price)
         }
+    }
+
+    func applyPriceUpdate(symbolId: String, price: Double) {
+        if let index = symbols.firstIndex(where: { $0.id == symbolId }) {
+            symbols[index].previousPrice = symbols[index].price
+            symbols[index].price = price
+        }
+    }
+
+    static func parseMessage(_ text: String) -> (symbolId: String, price: Double)? {
+        let components = text.split(separator: ":")
+        guard components.count == 2,
+              let price = Double(components[1]) else { return nil }
+        return (String(components[0]), price)
     }
 }
