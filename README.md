@@ -16,14 +16,26 @@ A SwiftUI iOS app that displays real-time price updates for 25 stock symbols usi
 
 ## Architecture
 
-The app follows **MVVM** with a **Coordinator** pattern for navigation.
+The app uses **Unidirectional Data Flow** with a **Coordinator** pattern for navigation.
+
+**Why UDF over MVVM?** The `WebSocketService` acts as a single source of truth — state flows down to views via `@Published` properties, and user actions flow back up through method calls (`connect()`, `disconnect()`). This avoids unnecessary ViewModel wrappers that would just pass through data, and ensures both screens always reflect the same state from a single shared service.
+
+```
+┌─────────────┐    @Published     ┌─────────────────┐
+│  WebSocket   │ ──────────────── │   Views          │
+│  Service     │   symbols,       │   (PriceFeed,    │
+│  (State)     │   isConnected    │    SymbolDetail)  │
+│              │ ◄──────────────  │                   │
+└─────────────┘  connect(),       └─────────────────┘
+                 disconnect()
+```
 
 ```
 MultibankGroup/
 ├── Models/
 │   └── StockSymbol.swift              # Data model with 25 stock symbols
 ├── Services/
-│   └── WebSocketService.swift         # WebSocket + Combine, shared ObservableObject
+│   └── WebSocketService.swift         # Single source of truth (ObservableObject)
 ├── Navigation/
 │   ├── Router.swift                   # Generic router (push, pop, present, dismiss)
 │   ├── RouterView.swift               # NavigationStack wrapper
@@ -40,9 +52,10 @@ MultibankGroup/
 
 ### Key Technical Decisions
 
+- **Unidirectional Data Flow** — `WebSocketService` owns all state; views only read and dispatch actions
 - **Combine** `Timer.publish` drives the 2-second update cycle
 - **Single `WebSocketService`** shared via `@EnvironmentObject` — no duplicate connections between screens
-- **`ObservableObject` + `@Published`** for reactive state
+- **`ObservableObject` + `@Published`** for reactive state propagation
 - **`@StateObject`** in `RootView`, **`@EnvironmentObject`** in child views
 - **`NavigationStack`** with typed routes via the generic `Router<T>`
 - **Coordinator pattern** decouples navigation logic from views
