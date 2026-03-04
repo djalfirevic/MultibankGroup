@@ -54,6 +54,13 @@ final class WebSocketService: ObservableObject {
         isConnected = false
     }
 
+    func applyPriceUpdate(symbolId: String, price: Double) {
+        if let index = symbols.firstIndex(where: { $0.id == symbolId }) {
+            symbols[index].previousPrice = symbols[index].price
+            symbols[index].price = price
+        }
+    }
+
     // MARK: - Private API
 
     private func initializePrices() {
@@ -120,13 +127,6 @@ final class WebSocketService: ObservableObject {
 
         DispatchQueue.main.async { [weak self] in
             self?.applyPriceUpdate(symbolId: symbolId, price: price)
-        }
-    }
-
-    func applyPriceUpdate(symbolId: String, price: Double) {
-        if let index = symbols.firstIndex(where: { $0.id == symbolId }) {
-            symbols[index].previousPrice = symbols[index].price
-            symbols[index].price = price
         }
     }
 
